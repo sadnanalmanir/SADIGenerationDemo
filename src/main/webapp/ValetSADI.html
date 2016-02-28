@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <!-- Website Title & Description for Search Engine purposes -->
+    <meta
+            name="DC.creator" content="Mohammad Sadnan Al Manir"/>
+    <meta
+            name="DC.publisher" content="Automatic SADI Service Generation"/>
+    <meta
+            name="description" content="An Automatic Approach for Generating PSOA RuleML
+	based SADI Semantic Web Services which can Query Relational Databases."/>
+    <meta
+            name="keywords" content="SADI Semantic Web Service, PSOA RuleML, Automatic
+	Service Generation"/>
+    <meta http-equiv="Content-Type"
+          content="text/html;charset=utf-8"/>
+    <title>Automatic Generation of SADI
+        Service for Qeurying Relational Database from Rule-based Mapping</title>
+
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,
+		user-scalable=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="includes/css/bootstrap-glyphicons.css"
+          rel="stylesheet">
+
+    <!-- Prism CSS for syntax highlighting -->
+    <link href="includes/css/prism.css"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="includes/css/styles.css">
+
+    <!-- Include Modernizr in the head, before any other Javascript -->
+    <script
+            src="includes/js/modernizr-2.6.2.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container" id="main">
+
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+
+            <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+            <!--button class="navbar-toggle" data-target=".navbar-responsive-collapse"
+            data-toggle="collapse" type="button"> 	                <span
+            class="icon-bar"></span> 	                <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 	            </button-->
+
+            <p class="navbar-brand"><b>Valet SADI</b></p>
+            <h3><b>Generating SADI Web
+                Services from Declarative Descriptions</b></h3></div><!-- end container -->
+    </div><!-- end navbar -->
+    <hr/>
+    <div class="row" id="moreInfo">
+        <div class="col-sm-12">
+
+            <div class="tabbable">
+                <ul class="nav nav-tabs" id="tabs">
+                    <li
+                            class="active"><a href="#tab1" data-toggle="tab">Ontology and Relational
+                        Database</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Deploy Service and Run SPARQL Query</a></li>
+                </ul>
+                <div class="tab-content">
+                    <br/>
+
+                    <div class="active tab-pane" id="tab1">
+                        <div class="col-sm-4">
+                            <div
+                                    class="input-group input-group-sm"> 	  								<span
+                                    class="input-group-addon">Domain Ontology
+												URI</span> <input type="text" class="form-control"
+                                                                  id="domainOntologyURI"
+                                                                  placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
+                                                                  value ="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
+                                                                  aria-describedby="sizing-addon3"></div>
+
+                            <br/>
+                            <input class="btn btn-success" id="loadDomOntBtn" type="button" value="Load"/>
+                            <br/>
+                            <br/> <textarea class="form-control
+														col-sm-4" id="domainOntologyContent" rows="12"></textarea>
+                        </div>
+                        <div class="col-sm-4">
+                            <div    class="input-group input-group-sm"> 	  								<span
+                                    class="input-group-addon">Service Ontology
+													URI</span> <input type="text" class="form-control"
+                                                                      id="serviceOntologyURI"
+                                                                      placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
+                                                                      value="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
+                                                                      aria-describedby="sizing-addon3"></div>
+
+                            <br/>
+                            <input class="btn btn-success" id="loadServOntBtn" type="button" value="Load"/>
+                            <br/>
+                            <br/> <textarea class="form-control
+														col-sm-4" id="serviceOntologyContent" rows="12"></textarea>
+                            <br/>
+                        </div>
+                    </div><!-- end 	tab-pane 1 -->
+
+                    <div class="tab-pane" id="tab2">
+                        <textarea class="form-control"
+                                  id="PSOAPSKB" rows="18"></textarea>
+                    </div><!-- end tab-pane -->                                                        </div><!-- end
+																	tab-content -->
+            </div><!-- end tabbable -->
+        </div><!-- end 														col-sm-6 -->
+
+    </div><!-- end col-sm-6 -->        </div><!-- end moreInfo -->
+
+<hr>
+
+</div><!-- end container -->
+
+<!--footer>     <div class="container">         <div class="row">
+<div class="col-sm-2">                 <h6>Copyright &copy; 2013
+{name}</h6> 											</div>
+
+<div class="col-sm-4">     <h6>About Us</h6>     <p>Lorem ipsum dolor
+sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+commodo consequat. Duis aute irure dolor in reprehenderit in
+voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt mollit anim id est laborum.</p> </div>
+
+<div class="col-sm-2">     <h6>Navigation</h6>     <ul
+class="unstyled">         <li><a href="#">Home</a></li> <li><a
+href="#">Services</a></li>         <li><a href="#">Links</a></li>
+<li><a href="#">Contact</a></li> 										</ul> </div>
+
+<div class="col-sm-2">     <h6>Follow Us</h6>     <ul
+class="unstyled">         <li><a href="#">Twitter</a></li> <li><a
+href="#">Facebook</a></li>         <li><a href="#">Google
+Plus</a></li>     </ul> </div>
+
+<div class="col-sm-2">     <h6>Coded with <span class="glyphicon
+glyphicon-heart"></span> by Brad</h6> </div> 	        </div>
+</div> 	</footer-->
+
+<!-- All Javascript at the bottom of the page for faster page loading -->
+
+<!-- First try for the online version of jQuery-->
+<script
+        src="http://code.jquery.com/jquery.js"></script>
+
+<!-- If no online access, fallback to our hardcoded version of jQuery -->
+<script>window.jQuery || document.write('<script src = "includes/js/jquery-1.8.2.min.js"/>');</script>
+
+<!-- Bootstrap JS -->
+<script
+        src="bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Prism JS -->
+<script src="includes/js/prism.js"></script>
+
+<!-- Custom JS -->
+<script
+        src="includes/js/testcases/samplepsoakb.js"></script>
+<script
+        src="includes/js/ontologyLoader.js"></script> <!--script
+														src="includes/js/script.js"></script-->
+<script
+        src="includes/js/testcases/single_tuple_psoa_term.js"></script>
+<script
+        src="includes/js/testcases/multi_slot_psoa_term.js"></script>
+<script
+        src="includes/js/testcases/multi_valued_slot.js"></script>
+<script
+        src="includes/js/testcases/psoa_terms_with_slots_and_tuples.js"></script>
+<script src="includes/js/testcases/class_membership.js"></script>
+<script
+        src="includes/js/testcases/family_non_objectified.js"></script>
+<script
+        src="includes/js/testcases/family.js"></script>
+<script
+        src="includes/js/testcases/family_variation_non_objectified.js"></script>
+<script src="includes/js/testcases/family_variation.js"></script>
+<script src="includes/js/testcases/rule_test_psoa_facts.js"></script>
+<script src="includes/js/testcases/rule_test_psoa_terms.js"></script>
+<script src="includes/js/testcases/entail_everything.js"></script>
+<script src="includes/js/testcases/multiple_entailment.js"></script>
+<script src="includes/js/testcases/arbitrary_entailment.js"></script>
+<script src="includes/js/testcases/objectification.js"></script>
+<script src="includes/js/testcases/recursion.js"></script>
+<script
+        src="includes/js/testcases/subclass1.js"></script>
+<script
+        src="includes/js/testcases/subclass2.js"></script>
+<script
+        src="includes/js/testcases/constant_and_string_equality.js"></script>
+<script src="includes/js/testcases/factorial1.js"></script>
+<script
+        src="includes/js/testcases/factorial2.js"></script>
+<script
+        src="includes/js/testcases/factorial3.js"></script>
+<script
+        src="includes/js/testcases/function_1.js"></script>
+<script
+        src="includes/js/testcases/function_2.js"></script>
+<script
+        src="includes/js/testcases/concatenation_original.js"></script>
+<script
+        src="includes/js/testcases/addition_and_multiplication.js"></script>
+<script src="includes/js/testcases/music_album.js"></script>
+
+</body>
+</html>
