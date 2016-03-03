@@ -9,6 +9,10 @@ Notes:	 Hand coded for Udemy.com
 
 */
 
+/* --------------------------------------
+   Textarea font
+   ------------------------------------*/
+
 
 /* --------------------------------------
    Layout
@@ -43,6 +47,8 @@ body {
 	text-rendering: optimizelegibility;
 }
 
+
+
 .well .page-header {
 	margin-top: 20px;
 }
@@ -55,22 +61,39 @@ body {
 	margin-top: 45px;
 }
 
-#listOfRulebases {
-	margin-top: 55px;	        
-}
-
-#collectionOfPSOARuleMLExamples {
-        max-height: 400px;
-        overflow-y: scroll;
-}
-
 ul.unstyled {
 	list-style: none;
 	padding: 0;
 }
 
-#PSOARuleMLXMLKB {
-    margin-bottom: 10px;
+textarea
+{
+	font-family:"Times New Roman", Times, serif;
+	font-size: 10px;
+}
+
+#domainOntologyURI {
+	font-size: 10px;
+}
+#serviceOntologyURI {
+	font-size: 9px;
+}
+
+/* --------------------------------------
+   Magnify the image when hovering on the TOHDW
+   -------------------------------------- */
+
+.transition {
+	-webkit-transform: scale(1.6);
+	-moz-transform: scale(1.6);
+	-o-transform: scale(1.6);
+	transform: scale(1.6);
+}
+#TOWDASchemaImageID {
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
 }
 
 /* --------------------------------------

@@ -61,8 +61,8 @@
                 Services from Declarative Descriptions</b></h3></div><!-- end container -->
     </div><!-- end navbar -->
     <hr/>
-    <div class="row" id="moreInfo">
-        <div class="col-sm-12">
+    <div id="moreInfo">
+        <div >
 
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="tabs">
@@ -75,43 +75,78 @@
                     <br/>
 
                     <div class="active tab-pane" id="tab1">
-                        <div class="col-sm-4">
-                            <div
-                                    class="input-group input-group-sm"> 	  								<span
-                                    class="input-group-addon">Domain Ontology
-												URI</span> <input type="text" class="form-control"
-                                                                  id="domainOntologyURI"
-                                                                  placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
-                                                                  value ="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
-                                                                  aria-describedby="sizing-addon3"></div>
+                        <div class="col-sm-12">
 
-                            <br/>
-                            <input class="btn btn-success" id="loadDomOntBtn" type="button" value="Load"/>
-                            <br/>
-                            <br/> <textarea class="form-control
-														col-sm-4" id="domainOntologyContent" rows="12"></textarea>
-                        </div>
-                        <div class="col-sm-4">
-                            <div    class="input-group input-group-sm"> 	  								<span
-                                    class="input-group-addon">Service Ontology
-													URI</span> <input type="text" class="form-control"
-                                                                      id="serviceOntologyURI"
-                                                                      placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
-                                                                      value="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
-                                                                      aria-describedby="sizing-addon3"></div>
+                            <div class="col-sm-4">
 
-                            <br/>
-                            <input class="btn btn-success" id="loadServOntBtn" type="button" value="Load"/>
-                            <br/>
-                            <br/> <textarea class="form-control
-														col-sm-4" id="serviceOntologyContent" rows="12"></textarea>
-                            <br/>
+                                <p><b>Domain Ontology URI</b></p>
+                                <div class="input-group">
+                                    <input input type="text" class="form-control"
+                                           id="domainOntologyURI"
+                                           placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
+                                           value ="http://cbakerlab.unbsj.ca:8080/haitohdemo/HAI.owl"
+                                           aria-describedby="sizing-addon3">
+	                					<span class="input-group-btn">
+	                						<button class="btn btn-success" id="loadDomOntBtn" type="button">Load</button>
+	                					</span>
+                                </div><!-- /input-group -->
+
+                                <!--br/>
+                                <input class="btn btn-success" id="loadDomOntBtn" type="button" value="Load"/-->
+
+                                <br/>
+                                <br/> <textarea class="form-control
+	                        col-sm-4" id="domainOntologyContent" rows="12"></textarea>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                                <p><b>Service Ontology URI</b></p>
+                                <div class="input-group">
+                                    <input input type="text" class="form-control"
+                                           id="serviceOntologyURI"
+                                           placeholder="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
+                                           value ="http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl"
+                                           aria-describedby="sizing-addon3">
+	                    		<span class="input-group-btn">
+	                    			<button class="btn btn-success" id="loadServOntBtn" type="button">Load</button>
+	                    		</span>
+                                </div><!-- /input-group -->
+
+                                <!--br/>
+                                <input class="btn btn-success" id="loadServOntBtn" type="button" value="Load"/-->
+
+
+                                <br/>
+                                <br/> <textarea class="form-control
+	                        col-sm-4" id="serviceOntologyContent" rows="12"></textarea>
+                                <br/>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">An Extract of The Ottawa Hospital Data Warehouse</div>
+                                    <div class="panel-body"><img src="images/TOHDWSchemaImage.png" id="TOWDASchemaImageID" alt="" class="img-responsive center-block" />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-8">
+                                <button class="btn btn-success" id="loadPSOAMappingRulesBtn" type="button">Load Mapping Rules</button>
+                                <br/>
+                                <p><b>Mapping of the Domain Ontology and the Relational Database</b></p>
+
+                                <textarea class="form-control col-sm-6" id="PSOAMappingRulesContentID" rows="12"></textarea>
+                            </div>
+                        </div>
+
                     </div><!-- end 	tab-pane 1 -->
 
                     <div class="tab-pane" id="tab2">
-                        <textarea class="form-control"
-                                  id="PSOAPSKB" rows="18"></textarea>
+            	<textarea class="form-control"
+                          id="PSOAPSKB" rows="18"></textarea>
                     </div><!-- end tab-pane -->                                                        </div><!-- end
 																	tab-content -->
             </div><!-- end tabbable -->
@@ -119,7 +154,7 @@
 
     </div><!-- end col-sm-6 -->        </div><!-- end moreInfo -->
 
-<hr>
+<!--hr-->
 
 </div><!-- end container -->
 
@@ -173,48 +208,7 @@ glyphicon-heart"></span> by Brad</h6> </div> 	        </div>
         src="includes/js/ontologyLoader.js"></script> <!--script
 														src="includes/js/script.js"></script-->
 <script
-        src="includes/js/testcases/single_tuple_psoa_term.js"></script>
-<script
-        src="includes/js/testcases/multi_slot_psoa_term.js"></script>
-<script
-        src="includes/js/testcases/multi_valued_slot.js"></script>
-<script
-        src="includes/js/testcases/psoa_terms_with_slots_and_tuples.js"></script>
-<script src="includes/js/testcases/class_membership.js"></script>
-<script
-        src="includes/js/testcases/family_non_objectified.js"></script>
-<script
-        src="includes/js/testcases/family.js"></script>
-<script
-        src="includes/js/testcases/family_variation_non_objectified.js"></script>
-<script src="includes/js/testcases/family_variation.js"></script>
-<script src="includes/js/testcases/rule_test_psoa_facts.js"></script>
-<script src="includes/js/testcases/rule_test_psoa_terms.js"></script>
-<script src="includes/js/testcases/entail_everything.js"></script>
-<script src="includes/js/testcases/multiple_entailment.js"></script>
-<script src="includes/js/testcases/arbitrary_entailment.js"></script>
-<script src="includes/js/testcases/objectification.js"></script>
-<script src="includes/js/testcases/recursion.js"></script>
-<script
-        src="includes/js/testcases/subclass1.js"></script>
-<script
-        src="includes/js/testcases/subclass2.js"></script>
-<script
-        src="includes/js/testcases/constant_and_string_equality.js"></script>
-<script src="includes/js/testcases/factorial1.js"></script>
-<script
-        src="includes/js/testcases/factorial2.js"></script>
-<script
-        src="includes/js/testcases/factorial3.js"></script>
-<script
-        src="includes/js/testcases/function_1.js"></script>
-<script
-        src="includes/js/testcases/function_2.js"></script>
-<script
-        src="includes/js/testcases/concatenation_original.js"></script>
-<script
-        src="includes/js/testcases/addition_and_multiplication.js"></script>
-<script src="includes/js/testcases/music_album.js"></script>
+        src="includes/js/data/psoamappingrule.js"></script>
 
 </body>
 </html>

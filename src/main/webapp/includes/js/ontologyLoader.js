@@ -10,22 +10,22 @@ var Slash = "/";
 var encode = encodeURIComponent;
 var slash = function(s) {
     return Slash + s;
-}
+};
 var append = function(s1, s2) {
     return s1 + s2;
-}
+};
 var WS = "ws";
 var service = function(service) {
     return append(WS, slash(service));
-}
+};
 // return the domain ontology URI from the textbox
 var domainOntURI = function() {
     return $("#domainOntologyURI").val();
-}
+};
 // return the service ontology URI from the textbox
 var serviceOntURI = function() {
     return $("#serviceOntologyURI").val();
-}
+};
 var loadDomainOntology = function(domOntURI, handler) {
     $.ajax({
         type: "POST",
@@ -36,7 +36,7 @@ var loadDomainOntology = function(domOntURI, handler) {
             handler(loadedOntologyContent);
         }
     });
-}
+};
 var loadServiceOntology = function(servOntURI, handler) {
     $.ajax({
         type: "POST",
@@ -47,7 +47,7 @@ var loadServiceOntology = function(servOntURI, handler) {
             handler(loadedOntologyContent);
         }
     });
-}
+};
 
 var loadRequest = function(ontURI) {
     var onturi = (ontURI) ? ontURI : "";
@@ -55,16 +55,33 @@ var loadRequest = function(ontURI) {
         //iri should be matched
         iri :onturi
     };
-}
+};
 
 
 
 // Set the button handler functions
 $(document).ready(function() {
 
+
+    // load the mapping rules when clicked
+    $("#loadPSOAMappingRulesBtn").click(function() {
+        $("#PSOAMappingRulesContentID").val(psoaRuleMLMapping);
+        // enable the first tab (index starting at 0)
+        $('#tabs li:eq(0) a').tab('show');
+    });
+    $("#PSOAMappingRulesContentID").prop("readonly",true);
+
+    // MAGNIFY the TOHDW image 1.6 times the original size when hovering over
+    $('#TOWDASchemaImageID').hover(function() {
+        $("#TOWDASchemaImageID").addClass('transition');
+
+    }, function() {
+        $("#TOWDASchemaImageID").removeClass('transition');
+    });
+
     // the URI in the textbox is now fixed for the HAI.owl, to enable set to 'enabled'
-    $("#domainOntologyURI").prop("disabled",true);
-    $("#serviceOntologyURI").prop("disabled",true);
+    $("#domainOntologyURI").prop("readonly",true);
+    $("#serviceOntologyURI").prop("readonly",true);
     // Load PSOA RuleML/XML Rulebases when selected
     //$("#PSOARuleMLXMLKB").val(SamplePSOAKB);
     // highlight the group PSOA RuleML/XML rulebase item  when selected
@@ -93,6 +110,7 @@ $(document).ready(function() {
 
         });
     });
+
     // load and display the service ontology when clicked
     $('#loadServOntBtn').click(function() {
         loadServiceOntology(encode(serviceOntURI()), function(result) {
