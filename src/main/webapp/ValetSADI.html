@@ -63,13 +63,13 @@
     <hr/>
     <div id="moreInfo">
         <div >
-
             <div class="tabbable">
                 <ul class="nav nav-tabs" id="tabs">
                     <li
                             class="active"><a href="#tab1" data-toggle="tab">Ontology and Relational
                         Database</a></li>
-                    <li><a href="#tab2" data-toggle="tab">Deploy Service and Run SPARQL Query</a></li>
+                    <li><a href="#tab2" data-toggle="tab">View Generated Sources</a></li>
+                    <!--li><a href="#tab2" data-toggle="tab">Deploy Service and Run SPARQL Query</a></li-->
                 </ul>
                 <div class="tab-content">
                     <br/>
@@ -136,18 +136,55 @@
                             <div class="col-sm-8">
                                 <button class="btn btn-success" id="loadPSOAMappingRulesBtn" type="button">Load Mapping Rules</button>
                                 <br/>
+                                <br/>
                                 <p><b>Mapping of the Domain Ontology and the Relational Database</b></p>
 
                                 <textarea class="form-control col-sm-6" id="PSOAMappingRulesContentID" rows="12"></textarea>
+                            </div>
+                            <div class="col-sm-4">
+                                <br/>
+                                <br/>
+                                <button class="btn btn-success" id="loadSourceCodeBtn" type="button">Load Generated Source Code</button>
+
                             </div>
                         </div>
 
                     </div><!-- end 	tab-pane 1 -->
 
                     <div class="tab-pane" id="tab2">
-            	<textarea class="form-control"
-                          id="PSOAPSKB" rows="18"></textarea>
-                    </div><!-- end tab-pane -->                                                        </div><!-- end
+
+                        <p>I'm in Section 2.</p>
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a href="#serviceClassTab" data-toggle="tab">Service Class</a></li>
+                            <li><a href="#mysqlConnectionTab" data-toggle="tab">DB Connection Class</a></li>
+                            <li><a href="#webXMLTab" data-toggle="tab">web.xml</a></li>
+                            <li><a href="#indexJSPTab" data-toggle="tab">index.jsp</a></li>
+                            <li><a href="#databasePropertiesTab" data-toggle="tab">database.properties</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="serviceClassTab">
+                                Oh my god it's the food tab!
+                            </div>
+                            <div class="tab-pane fade" id="mysqlConnectionTab">
+                                Toy tab!
+                            </div>
+                            <div class="tab-pane fade" id="webXMLTab">
+                                clothing tab
+                            </div>
+                            <div class="tab-pane fade" id="indexJSPTab">
+                                books books books
+                            </div>
+                            <div class="tab-pane fade" id="databasePropertiesTab">
+                                books books books
+                            </div>
+                        </div>
+
+
+
+
+                    </div><!-- end tab-pane -->
+                </div><!-- end
 																	tab-content -->
             </div><!-- end tabbable -->
         </div><!-- end 														col-sm-6 -->

@@ -126,6 +126,12 @@ $(document).ready(function() {
 
         });
     });
+    $('#loadSourceCodeBtn').click(function() {
+        $('#tabs li:eq(1) a').tab('show');
+    });
+
+
+
     //$("#tabs").tabs({
     //    disabled : [1, 2]
     //});
