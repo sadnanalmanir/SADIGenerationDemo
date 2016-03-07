@@ -4,8 +4,21 @@
 
 var LoadDomainOnt = "loaddomainont";
 var LoadServiceOnt = "loadserviceont";
+var Viewsourcecode = "viewsourcecode";
+var Serviceclass = "serviceclass";
+var Dbconnectionclass = "dbconnectionclass";
+var Webxmlconf = "webxmlconf";
+var Indexjsp = "indexjsp";
+var Pomxml = "pomxml";
+
 var loadedDomainOntology = "";
 var loadedServiceOntology = "";
+var loadedServiceClassCode = "";
+var loadedDBConnClassCode = "";
+var loadedwebxmlconf = "";
+var loadedindexjsp = "";
+var loadedpomxml = "";
+
 var Slash = "/";
 var encode = encodeURIComponent;
 var slash = function(s) {
@@ -48,6 +61,63 @@ var loadServiceOntology = function(servOntURI, handler) {
         }
     });
 };
+
+var loadServiceClassCode = function(handler) {
+    $.ajax({
+        type: "GET",
+        url: service(Viewsourcecode + slash(Serviceclass)),
+        contentType: "application/json; charset=utf-8",
+        success: function(loadedServiceClassCode) {
+            handler(loadedServiceClassCode);
+        }
+    });
+};
+
+var loadDBConnClassCode = function(handler) {
+    $.ajax({
+        type: "GET",
+        url: service(Viewsourcecode + slash(Dbconnectionclass)),
+        contentType: "application/json; charset=utf-8",
+        success: function(loadedDBConnClassCode) {
+            handler(loadedDBConnClassCode);
+        }
+    });
+};
+
+var loadWebXMLConfCode = function(handler) {
+    $.ajax({
+        type: "GET",
+        url: service(Viewsourcecode + slash(Webxmlconf)),
+        contentType: "application/json; charset=utf-8",
+        success: function(loadedwebxmlconf) {
+            handler(loadedwebxmlconf);
+        }
+    });
+};
+
+var loadIndexJSPCode = function(handler) {
+    $.ajax({
+        type: "GET",
+        url: service(Viewsourcecode + slash(Indexjsp)),
+        contentType: "application/json; charset=utf-8",
+        success: function(loadedindexjsp) {
+            handler(loadedindexjsp);
+        }
+    });
+};
+
+
+var loadPomXMLConf  = function(handler) {
+    $.ajax({
+        type: "GET",
+        url: service(Viewsourcecode + slash(Pomxml)),
+        contentType: "application/json; charset=utf-8",
+        success: function(loadedpomxml) {
+            handler(loadedpomxml);
+        }
+    });
+};
+
 
 var loadRequest = function(ontURI) {
     var onturi = (ontURI) ? ontURI : "";
@@ -126,9 +196,51 @@ $(document).ready(function() {
 
         });
     });
+
+    // load and display the service ontology when clicked
     $('#loadSourceCodeBtn').click(function() {
+        loadServiceClassCode(function(result) {
+            loadedServiceClassCode = result;
+            $("#serviceClassCodeTextareaID").val(loadedServiceClassCode);
+            $("#serviceClassTab").show();
+        });
+        loadDBConnClassCode(function(result) {
+            loadedDBConnClassCode = result;
+            $("#mysqlConnCodeTextareaID").val(loadedDBConnClassCode);
+            //$("#serviceClassTab").show();
+            //$('#tabs li:eq(1) a').tab('show');
+
+        });
+        loadWebXMLConfCode(function(result) {
+            loadedwebxmlconf = result;
+            $("#webXMLConfTextareaID").val(loadedwebxmlconf);
+            //$("#serviceClassTab").show();
+            //$('#tabs li:eq(1) a').tab('show');
+
+        });
+
+        loadIndexJSPCode(function(result) {
+            loadedindexjsp = result;
+            $("#indexJSPCodeTextareaID").val(loadedindexjsp);
+            //$("#serviceClassTab").show();
+            //$('#tabs li:eq(1) a').tab('show');
+
+        });
+
+        loadPomXMLConf(function(result) {
+            loadedpomxml = result;
+            $("#pomXMLConfTextareaID").val(loadedpomxml);
+            //$("#serviceClassTab").show();
+            //$('#tabs li:eq(1) a').tab('show');
+
+        });
+
         $('#tabs li:eq(1) a').tab('show');
     });
+
+
+
+
 
 
 

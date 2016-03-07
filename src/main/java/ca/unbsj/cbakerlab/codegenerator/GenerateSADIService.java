@@ -92,12 +92,13 @@ public class GenerateSADIService extends AbstractMojo
     private static final String INDEX_PATH = "src/main/webapp/index.jsp";
 
     // Contents of the files after they are created from the skeletons
-    String webXMLContent;
-    String pomXMLContent;
-    String serviceClassContent;
-    String mysqlDBClassContent;
-    String dbPropertiesContent;
-    String indexJSPContent;
+    private String webXMLContent;
+    private String pomXMLContent;
+    private String serviceClassContent;
+    private String mysqlDBClassContent;
+    private String dbPropertiesContent;
+    private String indexJSPContent;
+
 
     /**
      * The name of the service, which will also be used in the path to the
@@ -527,7 +528,7 @@ public class GenerateSADIService extends AbstractMojo
         /* This is where the SADI Web Service code will be written to
         */
         //File basePath = new File("/home/sadnana/Dropbox/Experiments/AutoSADIServiceCode/").getAbsoluteFile();
-        File basePath = new File("/home/sadnana/Downloads/AutoSADIServiceCode/").getAbsoluteFile();
+        File basePath = new File("/tmp/AutoSADIServiceCode/").getAbsoluteFile();
         System.out.println("Info: generating service files relative to " + basePath);
 
         /* create pom.xml file...
@@ -687,6 +688,19 @@ public class GenerateSADIService extends AbstractMojo
                 getLog().warn(String.format("failed to write new properties file %s: %s", SERVICE_PROPERTIES, e.getMessage()), e);
             }
         }
+
+        /**
+         * Store the code as Strings and
+         * Delete the directory where SADI code is generated.
+         */
+        /*try {
+            org.apache.commons.io.FileUtils.deleteDirectory(basePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+
     }
 
 
@@ -988,6 +1002,14 @@ public class GenerateSADIService extends AbstractMojo
         Velocity.init();
         Velocity.evaluate(context, writer, "SADI", template);
         writer.close();
+        System.out.println("==========================================");
+        System.out.println("=========== pom.x l ======================");
+        System.out.println("==========================================");
+        pomXMLContent = org.apache.commons.io.FileUtils.readFileToString(pomFile, "UTF-8");
+        if(pomXMLContent.isEmpty())
+            System.out.println("pom.xml is empty.");
+        else
+            System.out.println(pomXMLContent);
 
     }
 
@@ -1199,6 +1221,30 @@ public class GenerateSADIService extends AbstractMojo
                 throw new IOException(String.format("unable to create directory path ", parent));
     }
 
+    public String getServiceClassContent() {
+        return serviceClassContent;
+    }
+
+    public String getPomXMLContent() {
+        return pomXMLContent;
+    }
+
+    public String getWebXMLContent() {
+        return webXMLContent;
+    }
+
+    public String getMysqlDBClassContent() {
+        return mysqlDBClassContent;
+    }
+
+    public String getDbPropertiesContent() {
+        return dbPropertiesContent;
+    }
+
+    public String getIndexJSPContent() {
+        return indexJSPContent;
+    }
+
     private static class WebXmlParser extends DefaultHandler
     {
         Map<String, String> name2class;
@@ -1247,5 +1293,9 @@ public class GenerateSADIService extends AbstractMojo
             }
             accumulator.setLength(0);
         }
+
+
     }
+
+
 }

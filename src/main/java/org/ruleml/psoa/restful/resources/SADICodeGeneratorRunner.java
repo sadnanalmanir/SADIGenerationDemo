@@ -5,9 +5,15 @@ import ca.unbsj.cbakerlab.codegenerator.GenerateSADIService;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
 /**
  * Created by sadnana on 05/03/16.
  */
+
+@Path("/viewsourcecode")
+
 public class SADICodeGeneratorRunner {
 
     GenerateSADIService sadiService;
@@ -15,6 +21,62 @@ public class SADICodeGeneratorRunner {
     public SADICodeGeneratorRunner() throws MojoFailureException, MojoExecutionException {
         this.sadiService = new GenerateSADIService();
         this.sadiService.execute();
+    }
+
+
+    @Path("/serviceclass")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Encoded
+    public String getServiceClassSourceCode() {
+        if (!sadiService.getServiceClassContent().isEmpty())
+            return sadiService.getServiceClassContent();
+        else
+            return "No code generated for service class.";
+    }
+
+    @Path("/dbconnectionclass")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Encoded
+    public String getDBConnClassSourceCode() {
+        if (!sadiService.getMysqlDBClassContent().isEmpty())
+            return sadiService.getMysqlDBClassContent();
+        else
+            return "No code generated for DB Connection class.";
+    }
+
+    @Path("/webxmlconf")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Encoded
+    public String getWebXMLConfCode() {
+        if (!sadiService.getWebXMLContent().isEmpty())
+            return sadiService.getWebXMLContent();
+        else
+            return "No code generated for web.xml Configuration.";
+    }
+
+    @Path("/indexjsp")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Encoded
+    public String getIndexJSPSourceCode() {
+        if (!sadiService.getIndexJSPContent().isEmpty())
+            return sadiService.getIndexJSPContent();
+        else
+            return "No code generated for index.jsp.";
+    }
+
+    @Path("/pomxml")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Encoded
+    public String getPomXMLConf() {
+        if (!sadiService.getPomXMLContent().isEmpty())
+            return sadiService.getPomXMLContent();
+        else
+            return "No code generated for pom.xml.";
     }
 
     //try {
