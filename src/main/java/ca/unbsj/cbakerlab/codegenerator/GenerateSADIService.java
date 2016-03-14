@@ -207,6 +207,10 @@ public class GenerateSADIService extends AbstractMojo
 //	 */
 //	private String testOutput;
 
+
+
+
+
     public GenerateSADIService(){
     	
     	serviceName = "getDiagnosisIDByPatientID";
@@ -219,6 +223,17 @@ public class GenerateSADIService extends AbstractMojo
         
         
 
+    }
+
+
+
+    public GenerateSADIService(String serviceName, String serviceClass, String inputClassURI, String outputClassURI, String description, String contactEmail) {
+        this.serviceName = serviceName;
+        this.serviceClass = serviceClass;
+        this.inputClassURI = inputClassURI;
+        this.outputClassURI = outputClassURI;
+        this.description = description;
+        this.contactEmail = contactEmail;
     }
 
     public static void main(String[] args){
@@ -541,6 +556,7 @@ public class GenerateSADIService extends AbstractMojo
         pomProjectName = StringUtils.substringAfterLast(pomProjectName, ".");
 
         File pomFile = new File(basePath, String.format("pom.xml"));
+        /*
         if (pomFile.exists()) {
             try {
                 backuppomFile(pomFile);
@@ -548,6 +564,7 @@ public class GenerateSADIService extends AbstractMojo
                 throw new MojoFailureException("failed to backup existing pom.xml file: " + e.getMessage());
             }
         }
+        */
         try {
             writePomFile(pomFile, pomProjectName);
         } catch (Exception e) {
@@ -560,6 +577,7 @@ public class GenerateSADIService extends AbstractMojo
 		/* create class file...
 		 */
         File classFile = new File(basePath, String.format("%s/%s.java", SOURCE_DIRECTORY, serviceClass.replace(".", "/")));
+        /*
         if (classFile.exists()) {
             try {
                 backupClassFile(classFile);
@@ -567,6 +585,7 @@ public class GenerateSADIService extends AbstractMojo
                 throw new MojoFailureException("failed to backup existing Java file: " + e.getMessage());
             }
         }
+        */
         try {
             writeClassFile(classFile, serviceClass, inputClass, outputClass, serviceBean, async, refinedJavaSQL, inputCodeBlock, outputCodeBlock);
         } catch (Exception e) {
@@ -582,6 +601,7 @@ public class GenerateSADIService extends AbstractMojo
         String completeDBClassPath = packagePath.concat(".").concat(dbClassName);
 
         File dbConnClassFile = new File(basePath, String.format("%s/%s.java", SOURCE_DIRECTORY, completeDBClassPath.replace(".", "/")));
+        /*
         if(dbConnClassFile.exists()) {
             try{
                 backupDBConnClassFile(dbConnClassFile);
@@ -589,6 +609,7 @@ public class GenerateSADIService extends AbstractMojo
                 throw new MojoFailureException("failed to backup existing Database Connection Java file: " + e.getMessage());
             }
         }
+        */
         try {
             writeDBConnClassFile(dbConnClassFile, completeDBClassPath);
         } catch (Exception e) {
@@ -603,6 +624,7 @@ public class GenerateSADIService extends AbstractMojo
         String DB_PROPERTY_FILENAME = "database";
         String RESOURCES_DIRECTORY = StringUtils.substringBeforeLast(SERVICE_PROPERTIES, "/");
         File dbPropertiesFile = new File(basePath, String.format("%s/%s.properties", RESOURCES_DIRECTORY, DB_PROPERTY_FILENAME));
+        /*
         if(dbPropertiesFile.exists()) {
             try{
                 backupDBPropertiesFile(dbConnClassFile);
@@ -610,6 +632,7 @@ public class GenerateSADIService extends AbstractMojo
                 throw new MojoFailureException("failed to backup existing Database Propeties file: " + e.getMessage());
             }
         }
+        */
         try {
             writeDBPropertiesFile(dbPropertiesFile);
         } catch (Exception e) {
@@ -623,6 +646,7 @@ public class GenerateSADIService extends AbstractMojo
 
         String README_FILENAME = "README";
         File readmeFile = new File(basePath, String.format("%s.txt", README_FILENAME));
+        /*
         if(readmeFile.exists()) {
             try{
                 backupReadmeFile(readmeFile);
@@ -630,6 +654,7 @@ public class GenerateSADIService extends AbstractMojo
                 throw new MojoFailureException("failed to backup existing README file: " + e.getMessage());
             }
         }
+        */
         try {
             writeReadmeFile(readmeFile);
         } catch (Exception e) {

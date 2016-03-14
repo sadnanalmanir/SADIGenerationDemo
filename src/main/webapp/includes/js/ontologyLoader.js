@@ -132,12 +132,49 @@ var loadRequest = function(ontURI) {
 // Set the button handler functions
 $(document).ready(function() {
 
+    var mappingRulesLoadClicked = false;
+    var domainOntLoadClicked = false;
+    var serviceOntLoadClicked = false;
+
+
+
+    $('#rootwizard').bootstrapWizard({'nextSelector': '.button-next', 'previousSelector': '.button-previous'});
+
+    $("#go2DemoBtn").click(function() {
+        $('#tabs li:eq(1) a').tab('show');
+    });
+
+    $("#go2OntlolgiesTabBtn").click(function() {
+
+        $('#tabs li:eq(2) a').tab('show');
+    });
+
+    $("#go2mappingRulesTabBtn").click(function() {
+
+        if(domainOntLoadClicked ===  true && serviceOntLoadClicked === true)
+            $('#tabs li:eq(3) a').tab('show');
+        else
+            alert('Both ontologies must be loaded before generating SADI service code.')
+
+    });
+
+    $("#go2SourceCodeBtn").click(function() {
+        if(mappingRulesLoadClicked === true)
+            $('#tabs li:eq(4) a').tab('show');
+        else
+            alert('Mapping rules must be loaded before generating SADI service code.')
+    });
+
+
+
 
     // load the mapping rules when clicked
+
     $("#loadPSOAMappingRulesBtn").click(function() {
         $("#PSOAMappingRulesContentID").val(psoaRuleMLMapping);
+        mappingRulesLoadClicked = true;
         // enable the first tab (index starting at 0)
-        $('#tabs li:eq(1) a').tab('show');
+        $('#tabs li:eq(3) a').tab('show');
     });
     $("#PSOAMappingRulesContentID").prop("readonly",true);
 
@@ -163,11 +200,12 @@ $(document).ready(function() {
      */
 
     // hide the loading text area hidden until load button is clicked
-    $("#domainOntologyContent").hide();
-    $("#serviceOntologyContent").hide();
+    //$("#domainOntologyContent").hide();
+    //$("#serviceOntologyContent").hide();
     // load and display the domain ontology when clicked
     $('#loadDomOntBtn').click(function() {
         loadDomainOntology(encode(domainOntURI()), function(result) {
+            domainOntLoadClicked = true;
             loadedDomainOntology = result;
             $("#domainOntologyContent").val(loadedDomainOntology);
             $("#domainOntologyContent").show();
@@ -176,13 +214,14 @@ $(document).ready(function() {
             //alert('sucks');
             //$('#myTab a:last').tab('show');
             // enable the second tab (index starting at 0)
-            $('#tabs li:eq(1) a').tab('show');
+            $('#tabs li:eq(2) a').tab('show');
 
         });
     });
 
     // load and display the service ontology when clicked
     $('#loadServOntBtn').click(function() {
+        serviceOntLoadClicked = true;
         loadServiceOntology(encode(serviceOntURI()), function(result) {
             loadedServiceOntology = result;
             $("#serviceOntologyContent").val(loadedServiceOntology);
@@ -192,7 +231,7 @@ $(document).ready(function() {
             //alert('sucks');
             //$('#myTab a:last').tab('show');
             // enable the second tab (index starting at 0)
-            $('#tabs li:eq(1) a').tab('show');
+            $('#tabs li:eq(2) a').tab('show');
 
         });
     });
@@ -202,11 +241,11 @@ $(document).ready(function() {
         loadServiceClassCode(function(result) {
             loadedServiceClassCode = result;
             /*
-            loadedServiceClassCode = '<p>' + '<pre>'+
-                ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
+             loadedServiceClassCode = '<p>' + '<pre>'+
+             ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
 
-            $("#serviceClassTab").append(loadedServiceClassCode);
-            */
+             $("#serviceClassTab").append(loadedServiceClassCode);
+             */
             $("#serviceClassCodeTextareaID").val(loadedServiceClassCode);
             $("#serviceClassTab").show();
         });
@@ -214,10 +253,10 @@ $(document).ready(function() {
         loadDBConnClassCode(function(result) {
             loadedDBConnClassCode = result;
             /*
-            loadedDBConnClassCode = '<p>' + '<pre>'+
-                ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
-            $('#mysqlConnectionTab').append(loadedDBConnClassCode);
-            */
+             loadedDBConnClassCode = '<p>' + '<pre>'+
+             ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
+             $('#mysqlConnectionTab').append(loadedDBConnClassCode);
+             */
             $("#mysqlConnCodeTextareaID").val(loadedDBConnClassCode);
             //$("#serviceClassTab").show();
             //$('#tabs li:eq(1) a').tab('show');
@@ -227,10 +266,10 @@ $(document).ready(function() {
         loadWebXMLConfCode(function(result) {
             loadedwebxmlconf = result;
             /*
-            loadedwebxmlconf = '<p>' + '<pre>'+
-                ' <code class="language-xml">' + result + '</pre>'+ ' </code>' + '</p>';
-            $('#webXMLTab').append(loadedwebxmlconf);
-            */
+             loadedwebxmlconf = '<p>' + '<pre>'+
+             ' <code class="language-xml">' + result + '</pre>'+ ' </code>' + '</p>';
+             $('#webXMLTab').append(loadedwebxmlconf);
+             */
             $("#webXMLConfTextareaID").val(loadedwebxmlconf);
             //$("#serviceClassTab").show();
             //$('#tabs li:eq(1) a').tab('show');
@@ -240,10 +279,10 @@ $(document).ready(function() {
         loadIndexJSPCode(function(result) {
             loadedindexjsp = result;
             /*
-            loadedindexjsp = '<p>' + '<pre>'+
-                ' <code class="language-jsp">' + result + '</pre>'+ ' </code>' + '</p>';
-            $('#indexJSPTab').append(loadedindexjsp);
-            */
+             loadedindexjsp = '<p>' + '<pre>'+
+             ' <code class="language-jsp">' + result + '</pre>'+ ' </code>' + '</p>';
+             $('#indexJSPTab').append(loadedindexjsp);
+             */
             $("#indexJSPCodeTextareaID").val(loadedindexjsp);
             //$("#serviceClassTab").show();
             //$('#tabs li:eq(1) a').tab('show');
@@ -253,17 +292,17 @@ $(document).ready(function() {
         loadPomXMLConf(function(result) {
             loadedpomxml = result;
             /*
-            loadedpomxml = '<p>' + '<pre>'+
-                ' <code class="language-java">' + loadedpomxml + '</pre>'+ ' </code>' + '</p>';
-            $('#pomXMLTab').append(loadedpomxml);
-            */
+             loadedpomxml = '<p>' + '<pre>'+
+             ' <code class="language-java">' + loadedpomxml + '</pre>'+ ' </code>' + '</p>';
+             $('#pomXMLTab').append(loadedpomxml);
+             */
             $("#pomXMLConfTextareaID").val(loadedpomxml);
             //$("#serviceClassTab").show();
             //$('#tabs li:eq(1) a').tab('show');
 
         });
 
-        $('#tabs li:eq(2) a').tab('show');
+        $('#tabs li:eq(4) a').tab('show');
     });
 
 
@@ -277,5 +316,6 @@ $(document).ready(function() {
     //});
     //$("#tabs").tabs({
     //  disabled : [1, 2]
-    //});
+
+//});
 });
