@@ -135,7 +135,7 @@ $(document).ready(function() {
     var mappingRulesLoadClicked = false;
     var domainOntLoadClicked = false;
     var serviceOntLoadClicked = false;
-
+    var loadSourceCodeBtnClicked = false;
 
 
     $('#rootwizard').bootstrapWizard({'nextSelector': '.button-next', 'previousSelector': '.button-previous'});
@@ -238,74 +238,131 @@ $(document).ready(function() {
 
     // load and display the service ontology when clicked
     $('#loadSourceCodeBtn').click(function() {
-        loadServiceClassCode(function(result) {
-            loadedServiceClassCode = result;
-            /*
-             loadedServiceClassCode = '<p>' + '<pre>'+
-             ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
 
-             $("#serviceClassTab").append(loadedServiceClassCode);
-             */
-            $("#serviceClassCodeTextareaID").val(loadedServiceClassCode);
-            $("#serviceClassTab").show();
-        });
+        if(loadSourceCodeBtnClicked ===  true)
+        {
 
-        loadDBConnClassCode(function(result) {
-            loadedDBConnClassCode = result;
-            /*
-             loadedDBConnClassCode = '<p>' + '<pre>'+
-             ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
-             $('#mysqlConnectionTab').append(loadedDBConnClassCode);
-             */
-            $("#mysqlConnCodeTextareaID").val(loadedDBConnClassCode);
-            //$("#serviceClassTab").show();
-            //$('#tabs li:eq(1) a').tab('show');
+            loadServiceClassCode(function(result) {
+                loadedServiceClassCode = result;
+                /*
+                 loadedServiceClassCode = '<p>' + '<pre>'+
+                 ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
 
-        });
+                 $("#serviceClassTab").append(loadedServiceClassCode);
+                 */
+                $("#serviceClassCodeTextareaID").val(loadedServiceClassCode);
+                $("#serviceClassTab").show();
+            });
 
-        loadWebXMLConfCode(function(result) {
-            loadedwebxmlconf = result;
-            /*
-             loadedwebxmlconf = '<p>' + '<pre>'+
-             ' <code class="language-xml">' + result + '</pre>'+ ' </code>' + '</p>';
-             $('#webXMLTab').append(loadedwebxmlconf);
-             */
-            $("#webXMLConfTextareaID").val(loadedwebxmlconf);
-            //$("#serviceClassTab").show();
-            //$('#tabs li:eq(1) a').tab('show');
+            loadDBConnClassCode(function(result) {
+                loadedDBConnClassCode = result;
+                /*
+                 loadedDBConnClassCode = '<p>' + '<pre>'+
+                 ' <code class="language-java">' + result + '</pre>'+ ' </code>' + '</p>';
+                 $('#mysqlConnectionTab').append(loadedDBConnClassCode);
+                 */
+                $("#mysqlConnCodeTextareaID").val(loadedDBConnClassCode);
+                //$("#serviceClassTab").show();
+                //$('#tabs li:eq(1) a').tab('show');
 
-        });
+            });
 
-        loadIndexJSPCode(function(result) {
-            loadedindexjsp = result;
-            /*
-             loadedindexjsp = '<p>' + '<pre>'+
-             ' <code class="language-jsp">' + result + '</pre>'+ ' </code>' + '</p>';
-             $('#indexJSPTab').append(loadedindexjsp);
-             */
-            $("#indexJSPCodeTextareaID").val(loadedindexjsp);
-            //$("#serviceClassTab").show();
-            //$('#tabs li:eq(1) a').tab('show');
+            loadWebXMLConfCode(function(result) {
+                loadedwebxmlconf = result;
+                /*
+                 loadedwebxmlconf = '<p>' + '<pre>'+
+                 ' <code class="language-xml">' + result + '</pre>'+ ' </code>' + '</p>';
+                 $('#webXMLTab').append(loadedwebxmlconf);
+                 */
+                $("#webXMLConfTextareaID").val(loadedwebxmlconf);
+                //$("#serviceClassTab").show();
+                //$('#tabs li:eq(1) a').tab('show');
 
-        });
+            });
 
-        loadPomXMLConf(function(result) {
-            loadedpomxml = result;
-            /*
-             loadedpomxml = '<p>' + '<pre>'+
-             ' <code class="language-java">' + loadedpomxml + '</pre>'+ ' </code>' + '</p>';
-             $('#pomXMLTab').append(loadedpomxml);
-             */
-            $("#pomXMLConfTextareaID").val(loadedpomxml);
-            //$("#serviceClassTab").show();
-            //$('#tabs li:eq(1) a').tab('show');
+            loadIndexJSPCode(function(result) {
+                loadedindexjsp = result;
+                /*
+                 loadedindexjsp = '<p>' + '<pre>'+
+                 ' <code class="language-jsp">' + result + '</pre>'+ ' </code>' + '</p>';
+                 $('#indexJSPTab').append(loadedindexjsp);
+                 */
+                $("#indexJSPCodeTextareaID").val(loadedindexjsp);
+                //$("#serviceClassTab").show();
+                //$('#tabs li:eq(1) a').tab('show');
 
-        });
+            });
 
-        $('#tabs li:eq(4) a').tab('show');
+            loadPomXMLConf(function(result) {
+                loadedpomxml = result;
+                /*
+                 loadedpomxml = '<p>' + '<pre>'+
+                 ' <code class="language-java">' + loadedpomxml + '</pre>'+ ' </code>' + '</p>';
+                 $('#pomXMLTab').append(loadedpomxml);
+                 */
+                $("#pomXMLConfTextareaID").val(loadedpomxml);
+                //$("#serviceClassTab").show();
+                //$('#tabs li:eq(1) a').tab('show');
+
+            });
+            $('#tabs li:eq(4) a').tab('show');
+        }
+        else{
+            alert('Select a service to generate code.');
+            $('#tabs li:eq(4) a').tab('show');
+        }
+
+
     });
 
 
+
+
+    $("#serviceDropDownID").on("click", "li a", function() {
+        var serviceSelected = $(this).text();
+
+
+        // set parameters for the first service
+        if (serviceSelected === 'getDiagnosisIDByPatientID'){
+
+            loadSourceCodeBtnClicked = true;
+
+            $('#ServiceNameID').val(serviceSelected);
+            $('#ServiceNameID').prop("readonly",true);
+            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + serviceSelected + '_Demo.' + serviceSelected);
+            $('#ServiceClassID').prop("readonly",true);
+            $('#InputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelected + '_Input');
+            $('#InputClassID').prop("readonly",true);
+            $('#OutputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelected + '_Output');
+            $('#OutputClassID').prop("readonly",true);
+            $('#DescriptionID').val('Gets patient\'s diagnosis id based on the patient id');
+            $('#DescriptionID').prop("readonly",true);
+            $('#EmailID').val('sadnanalmanir@gmail.com');
+            $('#EmailID').prop("readonly",true);
+        }
+        // set parameters for the first service
+        if (serviceSelected === 'getDiagnosisCodeByDiagnosisID'){
+
+            loadSourceCodeBtnClicked = true;
+
+            $('#ServiceNameID').val(serviceSelected);
+            $('#ServiceNameID').prop("readonly",true);
+            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + serviceSelected + '_Demo.' + serviceSelected);
+            $('#ServiceClassID').prop("readonly",true);
+            $('#InputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelected + '_Input');
+            $('#InputClassID').prop("readonly",true);
+            $('#OutputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelected + '_Output');
+            $('#OutputClassID').prop("readonly",true);
+            $('#DescriptionID').val('Gets patient\'s diagnosis code based on the diagnosis id');
+            $('#DescriptionID').prop("readonly",true);
+            $('#EmailID').val('sadnanalmanir@gmail.com');
+            $('#EmailID').prop("readonly",true);
+        }
+
+
+
+
+    });
 
 
 
