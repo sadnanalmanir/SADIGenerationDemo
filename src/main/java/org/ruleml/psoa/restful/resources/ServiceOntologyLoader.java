@@ -259,7 +259,7 @@ public class ServiceOntologyLoader {
         return result;
     }
     @SuppressWarnings("deprecation")
-    private static String decode(String s) {
+    public static String decode(String s) {
         return URLDecoder.decode(s.replace("&gt;", ">"));
     }
 }

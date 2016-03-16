@@ -4,9 +4,11 @@ package org.ruleml.psoa.restful.resources;
 import ca.unbsj.cbakerlab.codegenerator.GenerateSADIService;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.ruleml.psoa.restful.models.ServiceParameterRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.net.URLDecoder;
 
 /**
  * Created by sadnana on 05/03/16.
@@ -19,12 +21,30 @@ public class SADICodeGeneratorRunner {
     GenerateSADIService sadiService;
 
     public SADICodeGeneratorRunner() throws MojoFailureException, MojoExecutionException {
-        this.sadiService = new GenerateSADIService();
-        this.sadiService.execute();
+
     }
 
+    private static String decode(String s) {
+        return URLDecoder.decode(s.replace("&gt;", ">"));
+    }
 
-    @Path("/serviceclass")
+    //@Path("/serviceparameters")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Encoded
+    public void loadServiceParameters(ServiceParameterRequest request) throws MojoFailureException, MojoExecutionException {
+
+        this.sadiService = new GenerateSADIService(decode(request.getServiceName()),
+                decode(request.getServiceClass()),
+                decode(request.getServiceInputURI()),
+                        decode(request.getServiceOutputURI()),
+                                decode(request.getServiceDescription()),
+                                        decode(request.getServiceEmail()));
+        this.sadiService.execute();
+
+    }
+
+    @Path("/sadiserviceclass")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Encoded
@@ -68,6 +88,14 @@ public class SADICodeGeneratorRunner {
             return "No code generated for index.jsp.";
     }
 
+    //try {
+        //sadiService.
+    //} catch (MojoExecutionException e) {
+    //    e.printStackTrace();
+    //} catch (MojoFailureException e) {
+    //    e.printStackTrace();
+    //}
+
     @Path("/pomxml")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -78,13 +106,5 @@ public class SADICodeGeneratorRunner {
         else
             return "No code generated for pom.xml.";
     }
-
-    //try {
-        //sadiService.
-    //} catch (MojoExecutionException e) {
-    //    e.printStackTrace();
-    //} catch (MojoFailureException e) {
-    //    e.printStackTrace();
-    //}
 
 }

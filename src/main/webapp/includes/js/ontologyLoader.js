@@ -5,7 +5,9 @@
 var LoadDomainOnt = "loaddomainont";
 var LoadServiceOnt = "loadserviceont";
 var Viewsourcecode = "viewsourcecode";
-var Serviceclass = "serviceclass";
+var SADIServiceclass = "sadiserviceclass";
+
+var ServiceParameters = "serviceparameters";
 var Dbconnectionclass = "dbconnectionclass";
 var Webxmlconf = "webxmlconf";
 var Indexjsp = "indexjsp";
@@ -18,6 +20,15 @@ var loadedDBConnClassCode = "";
 var loadedwebxmlconf = "";
 var loadedindexjsp = "";
 var loadedpomxml = "";
+
+var serviceName = "";
+var serviceClass = "";
+var serviceInputURI = "";
+var serviceOutputURI = "";
+var serviceDescription = "";
+var serviceEmail = "";
+
+
 
 var Slash = "/";
 var encode = encodeURIComponent;
@@ -62,10 +73,23 @@ var loadServiceOntology = function(servOntURI, handler) {
     });
 };
 
+
+var sendServiceParameters = function(serviceName, serviceClass, serviceInputURI, serviceOutputURI, serviceDescription, serviceEmail) {
+    $.ajax({
+        type: "POST",
+        url: service(Viewsourcecode),
+        data: JSON.stringify(sendParameters(serviceName, serviceClass, serviceInputURI, serviceOutputURI, serviceDescription, serviceEmail)),
+        contentType: "application/json; charset=utf-8",
+        success: function() {
+            alert('Parameters sent successfully.');
+        }
+    });
+};
+
 var loadServiceClassCode = function(handler) {
     $.ajax({
         type: "GET",
-        url: service(Viewsourcecode + slash(Serviceclass)),
+        url: service(Viewsourcecode + slash(SADIServiceclass)),
         contentType: "application/json; charset=utf-8",
         success: function(loadedServiceClassCode) {
             handler(loadedServiceClassCode);
@@ -127,7 +151,24 @@ var loadRequest = function(ontURI) {
     };
 };
 
+var sendParameters = function(serviceName, serviceClass, serviceInputURI, serviceOutputURI, serviceDescription, serviceEmail) {
 
+    var sName = (serviceName) ? serviceName : "";
+    var sClass = (serviceClass) ? serviceClass : "";
+    var sInputURI = (serviceInputURI) ? serviceInputURI : "";
+    var sOutputURI = (serviceOutputURI) ? serviceOutputURI : "";
+    var sDescription = (serviceDescription) ? serviceDescription : "";
+    var sEmail = (serviceEmail) ? serviceEmail : "";
+    return {
+        //iri should be matched
+        serviceName: sName,
+        serviceClass: sClass,
+        serviceInputURI: sInputURI,
+        serviceOutputURI: sOutputURI,
+        serviceDescription: sDescription,
+        serviceEmail: sEmail
+    };
+};
 
 // Set the button handler functions
 $(document).ready(function() {
@@ -241,6 +282,23 @@ $(document).ready(function() {
 
         if(loadSourceCodeBtnClicked ===  true)
         {
+            // Send the service parameters to initialize the code generator first, retrieved from the form
+            serviceName = $('#ServiceNameID').val();
+            serviceClass = $('#ServiceClassID').val();
+            serviceInputURI = $('#InputClassID').val();
+            serviceOutputURI = $('#OutputClassID').val();
+            serviceDescription = $('#DescriptionID').val();
+            serviceEmail = $('#EmailID').val();
+
+
+            sendServiceParameters(encode(serviceName),
+                encode(serviceClass), encode(serviceInputURI),
+                encode(serviceOutputURI), encode(serviceDescription),
+                encode(serviceEmail), function() {
+
+            });
+
+
 
             loadServiceClassCode(function(result) {
                 loadedServiceClassCode = result;
