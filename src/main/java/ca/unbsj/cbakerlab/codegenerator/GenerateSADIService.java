@@ -247,6 +247,7 @@ public class GenerateSADIService extends AbstractMojo
         }
     }
 
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
 //		serviceName = System.getProperty(SERVICE_NAME_KEY);
@@ -724,7 +725,6 @@ public class GenerateSADIService extends AbstractMojo
             e.printStackTrace();
         }
         */
-
 
     }
 

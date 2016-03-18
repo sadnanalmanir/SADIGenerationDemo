@@ -28,11 +28,16 @@ public class SADICodeGeneratorRunner {
         return URLDecoder.decode(s.replace("&gt;", ">"));
     }
 
-    //@Path("/serviceparameters")
+    @Path("/serviceparameters")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Encoded
-    public void loadServiceParameters(ServiceParameterRequest request) throws MojoFailureException, MojoExecutionException {
+
+    /* was void before, just sending a string to ajax handler to make sure that
+       the code is populated AFTER the generation is performed, otherwise there is a
+       propagation delay and the population doesn't show up instantly.
+      */
+    public String loadServiceParameters(ServiceParameterRequest request) throws MojoFailureException, MojoExecutionException {
 
         this.sadiService = new GenerateSADIService(decode(request.getServiceName()),
                 decode(request.getServiceClass()),
@@ -42,6 +47,7 @@ public class SADICodeGeneratorRunner {
                                         decode(request.getServiceEmail()));
         this.sadiService.execute();
 
+        return "Code generated.";
     }
 
     @Path("/sadiserviceclass")
