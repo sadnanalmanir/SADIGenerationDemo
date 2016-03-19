@@ -545,6 +545,12 @@ public class GenerateSADIService extends AbstractMojo
         */
         //File basePath = new File("/home/sadnana/Dropbox/Experiments/AutoSADIServiceCode/").getAbsoluteFile();
         File basePath = new File("/tmp/AutoSADIServiceCode/").getAbsoluteFile();
+        getLog().info("cleaning all files in the base directory");
+        try {
+            org.apache.commons.io.FileUtils.cleanDirectory(basePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Info: generating service files relative to " + basePath);
 
         /* create pom.xml file...

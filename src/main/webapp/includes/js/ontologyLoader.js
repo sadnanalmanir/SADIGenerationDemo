@@ -339,7 +339,7 @@ $(document).ready(function () {
 
             $('#ServiceNameID').val(serviceSelectedName);
             $('#ServiceNameID').prop("readonly", true);
-            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + serviceSelectedName + '_Demo.' + serviceSelectedName);
+            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + 'haiku-services.' + serviceSelectedName);
             $('#ServiceClassID').prop("readonly", true);
             $('#InputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelectedName + '_Input');
             $('#InputClassID').prop("readonly", true);
@@ -358,7 +358,7 @@ $(document).ready(function () {
 
             $('#ServiceNameID').val(serviceSelectedName);
             $('#ServiceNameID').prop("readonly", true);
-            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + serviceSelectedName + '_Demo.' + serviceSelectedName);
+            $('#ServiceClassID').val('ca.unbsj.cbakerlab.' + 'haiku-services.' + serviceSelectedName);
             $('#ServiceClassID').prop("readonly", true);
             $('#InputClassID').val('http://cbakerlab.unbsj.ca:8080/haitohdemo/haitoh-sadi-service-ontology.owl#' + serviceSelectedName + '_Input');
             $('#InputClassID').prop("readonly", true);
