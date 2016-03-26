@@ -13,10 +13,17 @@ Notes:	 Hand coded for Web demo
    Don't display the loading animation
     when the document is loaded.
    ------------------------------------*/
-#loading {
+#loadingCodeGIF {
     display: none;
 }
 
+#loadingRegisterGIF {
+    display: none;
+}
+
+#registrationSuccessMsg {
+    display: none;
+}
 
 /* --------------------------------------
    Textarea font

@@ -28,7 +28,7 @@ public class Application extends javax.ws.rs.core.Application {
             e.printStackTrace();
         }
 
-        this.singletons.add(new ServiceOntologyLoader());
+        this.singletons.add(new ServiceRegistrationLoader());
 
     }
 

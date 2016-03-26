@@ -13,6 +13,8 @@ var Webxmlconf = "webxmlconf";
 var Indexjsp = "indexjsp";
 var Pomxml = "pomxml";
 
+var RegisterServicePath = "registerservice";
+
 var loadedDomainOntology = "";
 var loadedServiceOntology = "";
 var loadedServiceClassCode = "";
@@ -73,15 +75,54 @@ var loadServiceOntology = function (servOntURI, handler) {
     });
 };
 
+var registerServiceURI = function (completeRegistryServiceURI, handler) {
+    $("#loadingRegisterGIF").css("display", "block");
+    $.ajax({
+        type: "POST",
+        url: service(RegisterServicePath),
+        data: JSON.stringify(loadRequest(completeRegistryServiceURI)),
+        contentType: "application/json; charset=utf-8",
+        success: function (successMessage) {
+            console.log('Message received : ' + successMessage);
+            handler(successMessage);
+            $('#registrationSuccessMsg').css("display", "block");
+            setTimeout(function() {
+                $('#registrationSuccessMsg').fadeOut('fast');
+            }, 1000); // <-- time in milliseconds
+            $("#loadingRegisterGIF").css("display", "none");
+            //$('#registrationSuccessMsg').css("display", "none");
+        }
+    });
+};
+
+/*
+var registerServiceURI = function (liveServiceURI, handler) {
+    $.ajax({
+        type: "GET",
+        url: 'http://cbakerlab.unbsj.ca:8080/sadi-registry-0.1.0-valet-sadi/register/',
+        data: "serviceURI=" + liveServiceURI,
+        datatype: 'jsonp',
+        //contentType: "application/jsonp; charset=utf-8",
+        success: function (data) {
+            console.log('successfully registered' + data);
+            handler();
+        },
+        error: function () {
+            console.log('no data is asked for');
+        }
+    });
+};
+*/
+
 
 var sendServiceParameters = function (serviceName, serviceClass, serviceInputURI, serviceOutputURI, serviceDescription, serviceEmail, handler) {
     // start the loading animation
-    $("#loading").css("display", "block");
+    $("#loadingCodeGIF").css("display", "block");
     $.ajax({
         type: "POST",
         url: service(Viewsourcecode + slash(ServiceParameters)),
         //beforeSend: function() { $body.addClass("loading"); },
-        //complete: function() { $body.removeClass("loading"); } 
+        //complete: function() { $body.removeClass("loading"); }
         data: JSON.stringify(sendParameters(serviceName, serviceClass, serviceInputURI, serviceOutputURI, serviceDescription, serviceEmail)),
         contentType: "application/json; charset=utf-8",
         success: function (codeCreationConfirmation) {
@@ -89,7 +130,7 @@ var sendServiceParameters = function (serviceName, serviceClass, serviceInputURI
             //alert('Parameters sent successfully.');
             handler(codeCreationConfirmation);
             // stop the loading animation once handler returns the confirmation that code is generated
-            $("#loading").css("display", "none");
+            $("#loadingCodeGIF").css("display", "none");
         }
     });
 };
@@ -185,10 +226,15 @@ var sendParameters = function (serviceName, serviceClass, serviceInputURI, servi
 
 $(document).ready(function () {
 
+    var iframe = document.getElementById("mirrorRegistryiframeID");
+    iframe.src = iframe.src;
+
+
     var mappingRulesLoadClicked = false;
     var domainOntLoadClicked = false;
     var serviceOntLoadClicked = false;
     var loadSourceCodeBtnClicked = false;
+    var registerServiceBtnClicked = false;
     // holds the name of the service selected from the dropdown menu
     var serviceSelectedName;
 
@@ -196,8 +242,12 @@ $(document).ready(function () {
      * Generate Service Code tab.
      * Hide the button to display and the all text areas for the generated code
      */
-    // hide the button
-    $('#diaplaySourceCodeBtn').hide();
+    // hide the display code button
+    $('#displaySourceCodeBtn').hide();
+    // hide the button for opening registry
+    $('#go2ServiceRegistryBtn').hide();
+    // hide the click to download botton
+    //$('#registerServiceBtn').hide();
     // hide the heading for the tabs
     $("#sourceCodeDisplayTabsHeadingID").hide();
     // hide all tabs for displaying source code
@@ -232,7 +282,7 @@ $(document).ready(function () {
         $('#tabs li:eq(1) a').tab('show');
     });
 
-    /*  
+    /*
      *  Relational Databases Tab
      */
 
@@ -249,7 +299,7 @@ $(document).ready(function () {
         $('#tabs li:eq(2) a').tab('show');
     });
 
-    /*  
+    /*
      *  Ontologies Tab
      */
 
@@ -299,13 +349,13 @@ $(document).ready(function () {
         //  alert('Both ontologies must be loaded before generating SADI service code.')
     });
 
-    /*  
+    /*
      *  Mapping Rules Tab
      */
 
     // Set the rules textarea read-only
     $("#PSOAMappingRulesContentID").prop("readonly", true);
-    // Load the mapping rules when clicked     
+    // Load the mapping rules when clicked
     $("#loadPSOAMappingRulesBtn").click(function () {
         $("#PSOAMappingRulesContentID").val(psoaRuleMLMapping);
         mappingRulesLoadClicked = true;
@@ -387,7 +437,9 @@ $(document).ready(function () {
 
         // Hide them whenever the Generate Code button is clicked
         // hide the button
-        $('#diaplaySourceCodeBtn').hide();
+        $('#displaySourceCodeBtn').hide();
+        $('#go2ServiceRegistryBtn').hide();
+        //$('#registerServiceBtn').hide();
         // hide the heading for the tabs
         $("#sourceCodeDisplayTabsHeadingID").hide();
         // hide all tabs for displaying source code
@@ -417,13 +469,14 @@ $(document).ready(function () {
                 encode(serviceEmail),
                 function (codeCreationConfirmation) {
                     // show the display code button if code generation is confirmed
-                    if(! (codeCreationConfirmation === "")) {
-                        console.log("MESSAGE RETURNED: "+ codeCreationConfirmation);
+                    if (!(codeCreationConfirmation === "")) {
+                        console.log("MESSAGE RETURNED: " + codeCreationConfirmation);
 
-                        // show the button
-                        $('#diaplaySourceCodeBtn').show();
-                    }
-                    else{
+                        // show the display code button
+                        $('#displaySourceCodeBtn').show();
+                        // show the click to download button
+                        //$('#registerServiceBtn').show();
+                    } else {
                         console.log("Possibly code generation was unsuccessful.")
                     }
                 });
@@ -440,7 +493,7 @@ $(document).ready(function () {
     /*
      * Display source code in the designated textareas
      */
-    $("#diaplaySourceCodeBtn").click(function () {
+    $("#displaySourceCodeBtn").click(function () {
 
 
         // load and display the generated service class code
@@ -529,10 +582,101 @@ $(document).ready(function () {
         $("#pomXMLConfTextareaID").show();
 
         // hide the button
-        $('#diaplaySourceCodeBtn').hide();
+        $('#displaySourceCodeBtn').hide();
 
 
         //$('#tabs li:eq(4) a').tab('show');
+    });
+
+    /*
+     *  Register services tab
+     *  Register the services
+     */
+    // Open the registry window on button click
+
+
+    // Select a service from the drop-down menu to register
+    $("#serviceToRegisterDropDownID").on("click", "li a", function () {
+        // get the selected serivce name
+        var deployedServiceSelected = $(this).text();
+
+        // set parameters for the first service when selected, set READ-ONLY
+        if (deployedServiceSelected === 'getDiagnosisIDByPatientID') {
+
+            registerServiceBtnClicked = true;
+            console.log(deployedServiceSelected);
+
+            $('#deployedServiceNameTxtFieldID').val('http://cbakerlab.unbsj.ca:8080/getDiagnosisIDByPatientID_demo/getDiagnosisIDByPatientID');
+            $('#deployedServiceNameTxtFieldID').prop("readonly", true);
+
+        }
+        if (deployedServiceSelected === 'getDiagnosisCodeByDiagnosisID') {
+
+            registerServiceBtnClicked = true;
+            console.log(deployedServiceSelected);
+            $('#deployedServiceNameTxtFieldID').val('http://cbakerlab.unbsj.ca:8080/getDiagnosisCodeByDiagnosisID_demo/getDiagnosisCodeByDiagnosisID');
+            $('#deployedServiceNameTxtFieldID').prop("readonly", true);
+            //registerServiceURI(encode(deployedServiceSelected), function () {});
+        }
+    });
+
+    $('#registerServiceBtn').click(function (e) {
+
+        var selectedServiceTxtFieldURI = $('#deployedServiceNameTxtFieldID').val();
+        // clear any code which is being displayed now
+        $("#deployedServiceNameTxtFieldID").val('');
+
+        if (registerServiceBtnClicked === true) {
+            $('#go2ServiceRegistryBtn').hide();
+            // Send the service parameters to initialize the code generator first, retrieved from the form
+
+            // call ajax for response, send both the registry and the service uri
+
+            var registryURI = 'http://cbakerlab.unbsj.ca:8080/sadi-registry-0.1.0-valet-sadi/register/?serviceURI=';
+            var serviceURI = selectedServiceTxtFieldURI;
+            registerServiceURI(encode(registryURI+serviceURI), function (registrationConfirmation) {
+
+                if (!(registrationConfirmation === "")) {
+                    console.log("MESSAGE RETURNED: " + registrationConfirmation);
+
+                    // show the display code button
+                    //$('#displaySourceCodeBtn').show();
+                    $('#go2ServiceRegistryBtn').show();
+
+                    //var iframe = document.getElementById("mirrorRegistryiframeID");
+                    iframe.src = iframe.src;
+                    // show the click to download button
+                    //$('#registerServiceBtn').show();
+                } else {
+                    console.log("Possibly service registration was unsuccessful.")
+                }
+
+            });
+            /*
+             sendServiceParameters(encode(serviceName),
+             encode(serviceClass), encode(serviceInputURI),
+             encode(serviceOutputURI), encode(serviceDescription),
+             encode(serviceEmail),
+             function (codeCreationConfirmation) {
+             // show the display code button if code generation is confirmed
+             if (!(codeCreationConfirmation === "")) {
+             console.log("MESSAGE RETURNED: " + codeCreationConfirmation);
+
+             // show the display code button
+             $('#displaySourceCodeBtn').show();
+             // show the click to download button
+             //$('#registerServiceBtn').show();
+             } else {
+             console.log("Possibly code generation was unsuccessful.")
+             }
+             });*/
+        } else {
+            alert('Select a service from the menu.');
+            // prevent the default behaviour of going to the first tab of the main tabs menu
+            e.preventDefault();
+            //$('#tabs li:eq(4) a').tab('show');
+        }
+
     });
 
 });
